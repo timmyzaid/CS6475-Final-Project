@@ -1,5 +1,31 @@
-<html>
+<!DOCTYPE html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="layout.css">
+<script></script>
+<script src="interaction.js"></script>
+<title>Page Title</title>
+<meta name="description" content="Mosaic Generator UI">
+</head>
 <body>
-this is the html fileasd f
+<div class="pageHeader">
+</div>
+<div class="content">
+<div class="pageLeftMenu">
+</div>
+<div class="pageContent">
+	<div class="uploadButton">
+		<input type="file" id="files" name="files[]" multiple>
+		<script>
+			document.getElementById('files').addEventListener('change', handleFileSelect, false);
+		</script>
+		<div class="startHere">
+			Upload Pictuers
+		</div>
+	</div>
+</div>
+</div>
+<div class="pageFooter">
+</div>
 </body>
 </html>

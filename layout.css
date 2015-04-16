@@ -1,0 +1,61 @@
+*{
+	padding: 0;
+	margin: 0;
+	/*border: 2px solid white;*/
+}
+body{
+	background-color: black;
+	height: 100%;
+}
+.pageHeader{
+	background-color: rgba(0, 0, 0, 0.5);
+	height: 100px;
+	width: 100%;
+	position: fixed;
+}
+.content{
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+.pageLeftMenu{
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 200px;
+}
+.pageContent{
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.uploadButton{
+	margin: 0 auto;
+	width: 100px;
+	cursor: default;
+	position: relative;
+}
+.startHere{
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	background-color: rgb(51, 255, 51);
+	cursor: default;
+	pointer-events: none;
+	position: absolute;
+}
+#files{
+	width: 100px;
+	height: 40px;
+	cursor: default;
+	position: absolute;
+}
+.pageFooter{
+	background-color: rgba(0, 0, 0, 0.5);
+	height: 100px;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+}
