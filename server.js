@@ -36,14 +36,30 @@ var server = http.createServer(function(request, response) {
 	}
 	else if(request.method === "POST"){
 		console.log("received post");
-		if(request.url === "/files"){
+		if(request.url === "/tilePhotos"){
 			var form = new formidable.IncomingForm();
-			form.uploadDir = './temp/';
+			form.uploadDir = './tilePhotos/';
 			form.keepExtensions = true;
 			form.parse(request);
 
 			form.on('fileBegin', function(name, file) {
-				file.path = './temp/' + file.name;
+				file.path = './tilePhotos/' + file.name;
+			});
+			
+			form.on('end', function(fields, files) {
+				console.log("Upload comleted!");
+				response.writeHead(200);
+				response.end();
+			});
+		}
+		else if(request.url === "/basePhoto"){
+			var form = new formidable.IncomingForm();
+			form.uploadDir = './basePhoto/';
+			form.keepExtensions = true;
+			form.parse(request);
+
+			form.on('fileBegin', function(name, file) {
+				file.path = './basePhoto/' + file.name;
 			});
 			
 			form.on('end', function(fields, files) {

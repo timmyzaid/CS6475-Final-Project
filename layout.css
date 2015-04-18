@@ -38,7 +38,22 @@ body{
 	cursor: default;
 	position: relative;
 }
-.startHere{
+.baseButton{
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	background-color: rgb(51, 255, 51);
+	cursor: default;
+	pointer-events: none;
+	position: absolute;	
+}
+#basePhoto{
+	width: 100px;
+	height: 40px;
+	cursor: default;
+	position: absolute;
+}
+.tileButton{
 	width: 100px;
 	height: 40px;
 	text-align: center;
@@ -46,12 +61,14 @@ body{
 	cursor: default;
 	pointer-events: none;
 	position: absolute;
+	top: 50px;
 }
-#files{
+#tilePhotos{
 	width: 100px;
 	height: 40px;
 	cursor: default;
 	position: absolute;
+	top: 50px;
 }
 .pageFooter{
 	background-color: rgba(0, 0, 0, 0.5);
