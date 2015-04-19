@@ -79,7 +79,7 @@ def generateMosaic(baseImage, tileImages, mosaicSize):
             if iResultCol == 1000:
                 k = 12
             tileAvg = calculateAverageRGB(baseImage[iRow : iRow + mosaicSize, iCol : iCol + mosaicSize, :])
-            print "iResultRow: " + str(iResultRow) + " - iResultCol: " + str(iResultCol) + " - iRow: " + str(iRow) + " - iCol: " + str(iCol)
+            #print "iResultRow: " + str(iResultRow) + " - iResultCol: " + str(iResultCol) + " - iRow: " + str(iRow) + " - iCol: " + str(iCol)
             resultImage[iResultRow : iResultRow + tileSize, iResultCol : iResultCol + tileSize, :] = findClosestMatch(tileAvg, tileImages)
             iCol += mosaicSize
             iResultCol += tileSize
@@ -102,5 +102,5 @@ if __name__ == "__main__":
     print str(len(images))
     baseImage = readBaseImage()
     
-    mosaic = generateMosaic(baseImage, images, 10)
+    mosaic = generateMosaic(baseImage, images, 50)
     cv2.imwrite("test.jpg", mosaic)
