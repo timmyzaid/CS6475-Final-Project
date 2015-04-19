@@ -4,7 +4,7 @@ var http = require('http'),
 
 
 var server = http.createServer(function(request, response) {
-	console.log(request.url);
+	//console.log(request.url);
 	if(request.method === "GET"){
 		if(request.url === '/'){
 			fs.readFile("./index.html", function(err, html){
@@ -35,17 +35,17 @@ var server = http.createServer(function(request, response) {
 		}
 	}
 	else if(request.method === "POST"){
-		console.log("received post");
+		//console.log("received post");
 		if(request.url === "/tilePhotos"){
 			var form = new formidable.IncomingForm();
-			form.uploadDir = './tilePhotos/';
+			form.uploadDir = './Mosaic/tilePhotos/';
 			form.keepExtensions = true;
 			form.parse(request);
 
 			form.on('fileBegin', function(name, file) {
-				file.path = './tilePhotos/' + file.name;
+				file.path = './Mosaic/tilePhotos/' + file.name;
 			});
-			
+
 			form.on('end', function(fields, files) {
 				console.log("Upload comleted!");
 				response.writeHead(200);
@@ -54,16 +54,30 @@ var server = http.createServer(function(request, response) {
 		}
 		else if(request.url === "/basePhoto"){
 			var form = new formidable.IncomingForm();
-			form.uploadDir = './basePhoto/';
+			form.uploadDir = './Mosaic/basePhoto/';
 			form.keepExtensions = true;
 			form.parse(request);
 
 			form.on('fileBegin', function(name, file) {
-				file.path = './basePhoto/' + file.name;
+				file.path = './Mosaic/basePhoto/' + file.name;
 			});
-			
+
 			form.on('end', function(fields, files) {
 				console.log("Upload comleted!");
+				response.writeHead(200);
+				response.end();
+			});
+		}
+		else if(request.url === "/generateMosaic"){
+			console.log("Handling mosaic generation");
+			var PythonShell = require('python-shell');
+
+			var options = {}
+			PythonShell.run('../generateMosaic.py', function(err){
+				if(err)
+					throw err;
+
+				console.log("Mosaic Generated");
 				response.writeHead(200);
 				response.end();
 			});

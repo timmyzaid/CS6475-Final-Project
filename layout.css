@@ -32,7 +32,7 @@ body{
 	flex-direction: column;
 	justify-content: center;
 }
-.uploadButton{
+.customButton{
 	margin: 0 auto;
 	width: 100px;
 	cursor: default;
@@ -45,7 +45,7 @@ body{
 	background-color: rgb(51, 255, 51);
 	cursor: default;
 	pointer-events: none;
-	position: absolute;	
+	position: absolute;
 }
 #basePhoto{
 	width: 100px;
@@ -69,6 +69,15 @@ body{
 	cursor: default;
 	position: absolute;
 	top: 50px;
+}
+.mosaicButton{
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	background-color: rgb(51, 255, 51);
+	cursor: default;
+	position: absolute;
+	top: 100px;
 }
 .pageFooter{
 	background-color: rgba(0, 0, 0, 0.5);

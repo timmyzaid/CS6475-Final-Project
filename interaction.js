@@ -52,3 +52,13 @@ function handleTilePhotosFileSelect(event){
 
 	xhr.send(formData);
 }
+
+function handleGenerateMosaic(event){
+	$.ajax({
+		type: "POST",
+		url: "generateMosaic",
+		success: function(data){
+			console.log("Mosaic generated");
+		}
+	});
+}

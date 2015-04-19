@@ -5,7 +5,7 @@ import os
 
 def readTileImages():
     print "Reading tile images"
-    tileFolder = os.path.abspath(os.path.join(os.curdir, 'tilePhotos'))
+    tileFolder = os.path.abspath(os.path.join(os.curdir, 'Mosaic', 'tilePhotos'))
 
     # Extensions recognized by opencv
     exts = ['.jpeg', '.jpg', '.jpe', '.png']
@@ -18,10 +18,10 @@ def readTileImages():
             img_list.append(cv2.imread(os.path.join(tileFolder, filename)))
 
     return img_list
-    
+
 def readBaseImage():
     print "Reading base image"
-    baseFolder = os.path.abspath(os.path.join(os.curdir, 'basePhoto'))
+    baseFolder = os.path.abspath(os.path.join(os.curdir, 'Mosaic', 'basePhoto'))
 
     # Extensions recognized by opencv
     exts = ['.jpeg', '.jpg', '.jpe', '.png']
@@ -43,14 +43,14 @@ def calculateAverageRGB(image):
     blueAvg = np.sum(image[:, :, 0])/imagePixels
     greenAvg = np.sum(image[:, :, 1])/imagePixels
     redAvg = np.sum(image[:, :, 2])/imagePixels
-    
+
     return redAvg, greenAvg, blueAvg
 
 class ImageInfo:
     def __init__(self, avg):
         self.rgbAvg = avg
         self.count = 1
-    
+
 def createAverageRGBList(images):
     print "Creating average RGB list"
     averages = []
@@ -72,7 +72,7 @@ def findClosestMatch(baseTileAvg, tileAvgs):
 
     tileAvgs[returnIndex].count += 1
     return returnIndex
-    
+
 def tintImageChannel(image, diff):
     image = image + diff
     np.place(image, image > 255, 255)
@@ -83,7 +83,7 @@ def tintImage(baseTileAvg, tileAvg, tileImage):
     redDiff = baseTileAvg[0] - tileAvg[0]
     greenDiff = baseTileAvg[1] - tileAvg[1]
     blueDiff = baseTileAvg[2] - tileAvg[2]
-    
+
     returnImage = np.copy(tileImage)
     returnImage[:, :, 0] = tintImageChannel(np.int16(tileImage[:, :, 0]), blueDiff)
     returnImage[:, :, 1] = tintImageChannel(np.int16(tileImage[:, :, 1]), greenDiff)
@@ -92,11 +92,11 @@ def tintImage(baseTileAvg, tileAvg, tileImage):
 
 def generateMosaic(baseImage, tileImages, tileAvgs, mosaicSize):
     print "Creating mosaic"
-    
+
     tileSize = tileImages[0].shape[0]
     iRows = baseImage.shape[0]
     iCols = baseImage.shape[1]
-    
+
     resultImage = np.zeros(((baseImage.shape[0] / mosaicSize) * tileSize, (baseImage.shape[1] / mosaicSize) * tileSize, 3), np.uint8)
     iResultRow = 0
     iRow = 0
@@ -109,26 +109,26 @@ def generateMosaic(baseImage, tileImages, tileAvgs, mosaicSize):
             resultImage[iResultRow : iResultRow + tileSize, iResultCol : iResultCol + tileSize, :] = tintImage(baseTileAvg, tileAvgs[matchIndex].rgbAvg, tileImages[matchIndex])
             iCol += mosaicSize
             iResultCol += tileSize
-        
+
         iRow += mosaicSize
         iResultRow += tileSize
-        
+
     return resultImage
 
 if __name__ == "__main__":
     print "Begin mosaic generation"
-    
+
     images = readTileImages()
     if len(images) <= 0:
         print "Error reading tile images"
         sys.exit()
-    
+
     averages = createAverageRGBList(images)
-    
+
     print str(len(images))
     baseImage = readBaseImage()
-    
+
     mosaic = generateMosaic(baseImage, images, averages, 50)
-    
+
     print "Writing mosaic"
     cv2.imwrite("test.jpg", mosaic)
